@@ -133,6 +133,19 @@ describe('Category Unit Tests', () => {
     expect(validateSpy).toHaveBeenCalledTimes(2);
   });
 
+  test('Should update a Category', () => {
+    const category = Category.create({ name: 'Some Name', description: 'Some Description' });
+
+    category.update({
+      name: 'Other Name',
+      description: 'Other Description'
+    });
+
+    expect(category.name).toBe('Other Name');
+    expect(category.description).toBe('Other Description');
+    expect(validateSpy).toHaveBeenCalledTimes(2);
+  });
+
   test('Should active a Category', () => {
     const category = new Category({
       name: 'Some Name',
