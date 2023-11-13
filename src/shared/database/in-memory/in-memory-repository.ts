@@ -1,4 +1,5 @@
 import { Entity } from "../../domain/entity";
+import { NotFoundError } from "../../domain/errors/not-found-error";
 import { IRepository } from "../../domain/repository/repository.interface";
 import { ValueObject } from "../../domain/value-object";
 
@@ -15,11 +16,11 @@ export abstract class InMemoryRepository<E extends Entity, EntityId extends Valu
 
   async update(entity: E): Promise<void> {
     const index = this.items.findIndex((item) => {
-      item.entityId.equals(entity.entityId)
+      return item.entityId.equals(entity.entityId)
     });
 
     if (index === -1) {
-      throw new Error('Entity note found');
+      throw new NotFoundError(entity.entityId, this.getEntity());
     }
 
     this.items[index] = entity;
@@ -27,11 +28,11 @@ export abstract class InMemoryRepository<E extends Entity, EntityId extends Valu
 
   async delete(entityId: EntityId): Promise<void> {
     const index = this.items.findIndex((item) => {
-      item.entityId.equals(entityId)
+      return item.entityId.equals(entityId)
     });
 
     if (index === -1) {
-      throw new Error('Entity note found');
+      throw new NotFoundError(entityId, this.getEntity());
     }
 
     this.items.splice(index, 1);
@@ -39,7 +40,7 @@ export abstract class InMemoryRepository<E extends Entity, EntityId extends Valu
 
   async findById(entityId: EntityId): Promise<E> {
     const item = this.items.find((item) => {
-      item.entityId.equals(entityId)
+      return item.entityId.equals(entityId)
     });
 
     return typeof item === 'undefined' ? null : item;
