@@ -1,7 +1,6 @@
-import { update } from "lodash";
-import { Entity } from "../../domain/entity";
-import { NotFoundError } from "../../domain/errors/not-found-error";
-import { Uuid } from "../../domain/value-objects/uuid.vo";
+import { Entity } from "../../../domain/entity";
+import { NotFoundError } from "../../../domain/errors/not-found-error";
+import { Uuid } from "../../../domain/value-objects/uuid.vo";
 import { InMemoryRepository } from "./in-memory-repository";
 
 type EntityStubConstructor = {
